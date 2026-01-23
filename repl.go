@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"github.com/cjoltz/pokedexcli/internal/commands"
 
+	"github.com/cjoltz/pokedexcli/internal/commands"
 )
 
 func startPokedex() {
@@ -22,9 +22,9 @@ func startPokedex() {
 
 		commandName := words[0]
 
-		command, exists := commands.getCommands()[commandName]
+		command, exists := commands.GetCommands()[commandName]
 		if exists {
-			err := command.callback()
+			err := command.Callback()
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -34,7 +34,6 @@ func startPokedex() {
 			continue
 		}
 	}
-
 
 }
 

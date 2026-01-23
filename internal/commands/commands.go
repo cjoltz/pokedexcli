@@ -1,32 +1,32 @@
 package commands
 
-type cliCommand struct {
-	name        string
-	description string
-	callback    func() error
+type CliCommand struct {
+	Name        string
+	Description string
+	Callback    func() error
 }
 
-func getCommands() map[string]cliCommand {
-	return map[string]cliCommand{
+func GetCommands() map[string]CliCommand {
+	return map[string]CliCommand{
 		"exit": {
-			name:        "exit",
-			description: "Exit the Pokedex",
-			callback:    commandExit,
+			Name:        "exit",
+			Description: "Exit the Pokedex",
+			Callback:    commandExit,
 		},
 		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
+			Name:        "help",
+			Description: "Displays a help message",
+			Callback:    commandHelp,
 		},
 		"map": {
-			name:        "map",
-			description: "Displays list of 20 maps. Subsequent uses get next 20 maps.",
-			callback:    commandMap,
+			Name:        "map",
+			Description: "Displays list of 20 maps. Subsequent uses get next 20 maps.",
+			Callback:    commandMap,
 		},
 		"mapb": {
-			name:        "map",
-			description: "Displays previous 20 maps, if not in first map page.",
-			callback:    commandMapBack,
+			Name:        "map",
+			Description: "Displays previous 20 maps, if not in first map page.",
+			Callback:    commandMapBack,
 		},
 	}
 }
