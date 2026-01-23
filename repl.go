@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"github.com/cjoltz/pokedexcli/commands"
+	"github.com/cjoltz/pokedexcli/internal/commands"
 
 )
 
