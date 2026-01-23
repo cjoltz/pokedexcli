@@ -5,46 +5,39 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"github.com/cjoltz/pokedexcli/commands"
+
 )
 
 func startPokedex() {
-	fmt.Println("Hello Trainer")
-	scanner := bufio.NewScanner(os.Stdin)
-	for true {
+	reader := bufio.NewScanner(os.Stdin)
+	for {
 		fmt.Print("Pokedex > ")
-		if scanner.Scan() {
-			userCommand := cleanInput(scanner.Text())[0]
-			callbackFunction := getCommand(userCommand)
-			if callbackFunction != nil {
-				err := callbackFunction()
-				if err != nil {
-					fmt.Println("Error in function")
-				}
+		reader.Scan()
+
+		words := cleanInput(reader.Text())
+		if len(words) == 0 {
+			continue
+		}
+
+		commandName := words[0]
+
+		command, exists := commands.getCommands()[commandName]
+		if exists {
+			err := command.callback()
+			if err != nil {
+				fmt.Println(err)
 			}
+			continue
+		} else {
+			fmt.Println("Unknown command")
+			continue
 		}
 	}
+
+
 }
 
 func cleanInput(text string) []string {
-	sep := " "
-	// fmt.Println("Hello")
-	s := strings.ToLower(strings.TrimSpace(text))
-	var result []string
-	i := strings.Index(s, sep)
-	for i > -1 {
-		result = append(result, s[:i])
-		nextStart := i + len(sep)
-		// Empty elements not allowed
-		for nextStart < len(s) {
-			if string(s[nextStart]) == sep {
-				nextStart++
-			} else {
-				break
-			}
-		}
-		s = s[nextStart:]         // remove extracted part from s
-		i = strings.Index(s, sep) // nextEnd
-	}
-	return append(result, s)
+	return strings.Fields(strings.ToLower(text))
 }
-
