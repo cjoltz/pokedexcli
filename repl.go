@@ -13,8 +13,14 @@ func startPokedex() {
 	for true {
 		fmt.Print("Pokedex > ")
 		if scanner.Scan() {
-			userInput := cleanInput(scanner.Text())
-			fmt.Printf("Your command was: %s\n", userInput[0])
+			userCommand := cleanInput(scanner.Text())[0]
+			callbackFunction := getCommand(userCommand)
+			if callbackFunction != nil {
+				err := callbackFunction()
+				if err != nil {
+					fmt.Println("Error in function")
+				}
+			}
 		}
 	}
 }
@@ -41,3 +47,4 @@ func cleanInput(text string) []string {
 	}
 	return append(result, s)
 }
+
