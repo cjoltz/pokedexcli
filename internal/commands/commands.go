@@ -3,7 +3,7 @@ package commands
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func() error
+	Callback    func(c *Config) error
 }
 
 func GetCommands() map[string]CliCommand {
@@ -24,7 +24,7 @@ func GetCommands() map[string]CliCommand {
 			Callback:    commandMap,
 		},
 		"mapb": {
-			Name:        "map",
+			Name:        "mapb",
 			Description: "Displays previous 20 maps, if not in first map page.",
 			Callback:    commandMapBack,
 		},
