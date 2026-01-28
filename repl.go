@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
 	"github.com/cjoltz/pokedexcli/internal/commands"
+
+
 )
 
-func startPokedex() {
+func startPokedex(cfg *commands.Config) {
 	reader := bufio.NewScanner(os.Stdin)
-	cfg := commands.Config{Next: "", Previous: ""}
 	for {
 		fmt.Print("Pokedex > ")
 		reader.Scan()
@@ -25,7 +25,7 @@ func startPokedex() {
 
 		command, exists := commands.GetCommands()[commandName]
 		if exists {
-			err := command.Callback(&cfg)
+			err := command.Callback(cfg)
 			if err != nil {
 				fmt.Println(err)
 			}

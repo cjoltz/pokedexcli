@@ -2,24 +2,24 @@ package commands
 
 import (
 	"fmt"
-
-	"github.com/cjoltz/pokedexcli/internal/api"
+	"errors"
 )
 
-func commandMapBack(c *Config) error {
-	// 1. Make Request
-	mapObjects, err := api.GetPreviousMaps(c.Previous)
+func commandMapBack(cfg *Config) error {
+	if cfg.prevLocationsURL == nil {
+		return errors.New("you're on the first page")
+	}
+
+	locationsResp, err := cfg.PokeapiClient.ListLocations(cfg.prevLocationsURL)
 	if err != nil {
 		return err
 	}
 
-	// 2. Update config object passed into function
-	c.Previous = mapObjects.Previous
-	c.Next = mapObjects.Next
+	cfg.nextLocationsURL = locationsResp.Next
+	cfg.prevLocationsURL = locationsResp.Previous
 
-	for _, res := range mapObjects.Results {
-		fmt.Println(res.Name)
+	for _, loc := range locationsResp.Results {
+		fmt.Println(loc.Name)
 	}
-
 	return nil
 }

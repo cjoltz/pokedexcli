@@ -1,9 +1,19 @@
 package commands
 
+import (
+	"github.com/cjoltz/pokedexcli/internal/pokeapi"
+)
+
 type CliCommand struct {
 	Name        string
 	Description string
 	Callback    func(c *Config) error
+}
+
+type Config struct {
+	nextLocationsURL *string
+	prevLocationsURL *string
+	PokeapiClient    pokeapi.Client
 }
 
 func GetCommands() map[string]CliCommand {
